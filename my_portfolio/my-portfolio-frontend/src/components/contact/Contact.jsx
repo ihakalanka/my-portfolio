@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { MdOutlineEmail } from 'react-icons/md';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { MdOutlineEmail } from "react-icons/md";
-import "./contact.css";
+import './contact.css';
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -57,15 +57,14 @@ const Contact = () => {
     }
   };
 
+
   return (
     <section id="contact">
       <h5>Get In Touch</h5>
       <h2>Contact Me</h2>
-
       <>
         <ToastContainer />
       </>
-
       <div className="container contact__container">
         <div className="contact__options">
           <article className="contact__option">
@@ -76,14 +75,30 @@ const Contact = () => {
           </article>
         </div>
         <form>
-          <input type="text" placeholder="Your Full Name" required />
-          <input type="email" placeholder="Your Email" required />
-          <textarea placeholder="Your message" rows="7" required></textarea>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={submit}
-            disabled={!name || !email || !message || isError}
+          <input
+            type="text"
+            placeholder="Your Full Name"
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Your Email"
+            required
+            onChange={(e) => {
+              setEmail(e.target.value);
+              validation(e);
+            }}
+          />
+          <textarea
+            placeholder="Your message"
+            rows="7"
+            required
+            onChange={(e) => setMessage(e.target.value)}
+          ></textarea>
+          <button type="submit" className="btn btn-primary"
+          onClick={submit}
+          disabled={!name || !email || !message || isError}
           >
             Send Message
           </button>
