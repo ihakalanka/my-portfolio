@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const router = require('./routes');
 
 require('dotenv').config();
 
@@ -21,6 +22,8 @@ mongoose.connect(process.env.MONGODB_URL, {
 app.use(bodyParser.json());
 
 app.use(cors());
+
+app.use('/api', router);
 
 app.listen(port, () => {
     console.log(`Server listening on port: ${port}!`);

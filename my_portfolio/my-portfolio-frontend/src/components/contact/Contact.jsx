@@ -15,7 +15,7 @@ const Contact = () => {
     e.preventDefault();
 
     await axios
-      .post(`api`, {
+      .post(`http://localhost:8080/api/send-message`, {
         name,
         email,
         message,
