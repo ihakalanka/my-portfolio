@@ -20,7 +20,8 @@ const Contact = () => {
         email,
         message,
       })
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         toast.success("Thanks, I'll reply ASAP :)", {
           position: "top-right",
           autoClose: 3000,
@@ -31,9 +32,12 @@ const Contact = () => {
           draggable: true,
           progress: undefined,
         });
-        e.target.reset();
+        setInterval(() => {
+          window.location.reload();
+        }, 3000);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         toast.error("Something Wrong", {
           position: "top-right",
           autoClose: 3000,
