@@ -1,40 +1,71 @@
-import React, { useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
-import { MdOutlineEmail } from 'react-icons/md';
-import './contact.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { MdOutlineEmail } from "react-icons/md";
+import "./contact.css";
 
 const Contact = () => {
-  const [message, setMessage] = useState(false);
-  const formRef = useRef();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setMessage(true);
-    emailjs
-      .sendForm(
-        'service_k2qawqh',
-        'template_c6rkpn6',
-        formRef.current,
-        'X7K7ebhIeOy3YwHki'
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState("");
 
-    e.target.reset();
+  const submit = async (e) => {
+    e.preventDefault();
+
+    await axios
+      .post(`api`, {
+        name,
+        email,
+        message,
+      })
+      .then(() => {
+        toast.success("Thanks, I'll reply ASAP :)", {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "colored",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        e.target.reset();
+      })
+      .catch(() => {
+        toast.error("Something Wrong", {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "colored",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
   };
+
+  const validation = (e) => {
+    const emailVAlidation = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (!emailVAlidation.test(email)) {
+      setIsError("Enter Correct Email Address");
+    } else {
+      setIsError("");
+    }
+  };
+
   return (
     <section id="contact">
       <h5>Get In Touch</h5>
-      <h5>
-        I do receive your messages and will respond asap if the valid email is
-        provided :)
-      </h5>
       <h2>Contact Me</h2>
+
+      <>
+        <ToastContainer />
+      </>
+
       <div className="container contact__container">
         <div className="contact__options">
           <article className="contact__option">
@@ -44,29 +75,18 @@ const Contact = () => {
             <a href="mailto:akalankaih19@gmail.com">Send a message</a>
           </article>
         </div>
-        <form ref={formRef} onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Your Full Name"
-            name="user_name"
-            required
-          />
-          <input
-            type="text"
-            placeholder="Your Email"
-            name="user_email"
-            required
-          />
-          <textarea
-            placeholder="Your message"
-            rows="7"
-            name="message"
-            required
-          ></textarea>
-          <button type="submit" className="btn btn-primary">
+        <form>
+          <input type="text" placeholder="Your Full Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Your message" rows="7" required></textarea>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={submit}
+            disabled={!name || !email || !message || isError}
+          >
             Send Message
           </button>
-          {message && <span>Thanks, I'll reply ASAP :)</span>}
         </form>
       </div>
     </section>
