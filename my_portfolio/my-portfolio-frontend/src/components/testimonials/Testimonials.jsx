@@ -14,7 +14,7 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      link: 'https://www.linkedin.com/in/uzairali19/',
+      link: 'https://www.linkedin.com',
       name: 'Uzair Ali',
       role: 'Full-Stack Web Developer. JavaScript | Rails | React | Redux. Improving open-source projects, one commit at a time.',
       test: 'As a developer and a problem solver, I think Haresh is a great collaborative partner to have. I met Haresh in some basic javascript & react projects and since then she has drastically progressed in his understanding of the development process. He always has a professional environment and has good audio and video quality which makes it easier to communicate with him.',
@@ -47,4 +47,4 @@ const Testimonials = () => {
   )
 }
 
-export default Testimonials
+export default Testimonials;
